@@ -1,0 +1,39 @@
+this is a ai companion type project which is like character ai (c.ai)
+
+step-by-step procedure:
+
+technologies used:
+1. nextjs
+    routing in nextjs is done using folder structure
+    (foldername) represents a group of file structure, doesnt come under considereation for routing
+    [foldername] represents for specific api id or companion id which is to be added in the url
+    layout.tsx file contains the structure for all the pages in that folder. if we want nav to be shown all across the page then we add navbar component in layout
+    we make components in components folder
+
+2. clerk
+    used for login, signup functions 
+    maintains a database of the users who logged in or signed up
+    provides user management
+    built in sign up and signin pages
+    built in validity checks
+
+3. shadcn
+    component based library for ui 
+    download a specific component you need from their website using npm then import it as specified in the docs 
+    contains many variant and also you can create one of your own
+    components/ui
+
+4. prisma
+    in here db schemas are made and generated which are then fed into the db
+    it is a orm model which allows you to define your database schema in a TypeScript-friendly
+    two steps to follow whenever schema is changed:
+        npx prisma generate
+        npx prisma db push
+
+5. neon tech 
+    db provider
+    out tables and data is stored in here
+    free sources provider (as planetscale is now paid which was used in the video)
+
+6. cloudinary
+    cloud-based image and video processing platform that enables developers to easily upload, store, manipulate, and deliver images and videos in their web and mobile applications.
