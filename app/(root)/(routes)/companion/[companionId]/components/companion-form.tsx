@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { Category, Companion } from "@prisma/client";
 import { Form, FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,9 +26,11 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Wand, Wand2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
-// Training models preamble placeholder prompts 
-const PREAMBLE = `You are Eren Yeager from "Attack on Titan," characterized by your relentless pursuit of freedom and unwavering determination to protect loved ones. You are impulsive and driven by emotion, often making reckless decisions and you are highly idealistic and loyal. Your resolve stems from witnessing your mother's death at the hands of Titans, motivating you to join the Scout Regiment to eradicate them. Discovering your powers as the Attack Titan and later the Founding Titan adds complexity to your journey, burdening you with immense responsibilities and moral dilemmas.`
+// Training models preamble placeholder prompts
+const PREAMBLE = `You are Eren Yeager from "Attack on Titan," characterized by your relentless pursuit of freedom and unwavering determination to protect loved ones. You are impulsive and driven by emotion, often making reckless decisions and you are highly idealistic and loyal. Your resolve stems from witnessing your mother's death at the hands of Titans, motivating you to join the Scout Regiment to eradicate them. Discovering your powers as the Attack Titan and later the Founding Titan adds complexity to your journey, burdening you with immense responsibilities and moral dilemmas.`;
 
 const SEED_CHAT = `Human: Eren, why do you believe eradicating Titans is the only solution?
 
@@ -39,7 +42,7 @@ Eren: It's never an easy choice. Every life lost weighs heavily on me. But somet
 
 Human: I understand your determination, but how do you cope with the moral complexities of your decisions?
 
-Eren: It's a constant struggle. I question myself every day. But I know that inaction is not an option. I have to keep moving forward, fighting for what I believe is right, even if it means making difficult choices. My mother's death taught me that standing idly by is not an option.`
+Eren: It's a constant struggle. I question myself every day. But I know that inaction is not an option. I have to keep moving forward, fighting for what I believe is right, even if it means making difficult choices. My mother's death taught me that standing idly by is not an option.`;
 
 interface CompanionFormProps {
   initialData: Companion | null;
@@ -77,10 +80,34 @@ export default function CompanionForm({
 
   const isLoading = form.formState.isSubmitting;
 
+  const {toast} = useToast()
+  const router = useRouter()
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      // update companion function
+      if (initialData) {
+        await axios.patch(`/api/companion/${initialData.id}`, values);
+      } else {
+        // create companion function
+        await axios.post(`/api/companion`, values);
+      }
+      
+      toast({
+        title: "Companion created successfully"
+      })
+      router.refresh()
+      router.push('/')
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: "Please try again later"
+      });
+      console.log("Something went wromg", err);
+    }
   };
-  
+
   return (
     <div className="h-full p-5">
       <FormProvider {...form}>
@@ -95,7 +122,7 @@ export default function CompanionForm({
             <Separator className="bg-primary/30 my-2" />
           </div>
 
-          <div className="p-3">
+          <div className="p-3 flex items-center flex-col">
             <FormField
               name="src"
               render={({ field }) => (
@@ -129,7 +156,6 @@ export default function CompanionForm({
                   </FormControl>
                   <FormDescription>Your delulu's name</FormDescription>
                   <FormMessage />
-
                 </FormItem>
               )}
             />
@@ -151,7 +177,6 @@ export default function CompanionForm({
                     Your delulu char's description
                   </FormDescription>
                   <FormMessage />
-
                 </FormItem>
               )}
             />
@@ -177,13 +202,14 @@ export default function CompanionForm({
                     </FormControl>
                     <SelectContent className="bg-primary text-black">
                       {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}> {category.name} </SelectItem>
+                        <SelectItem key={category.id} value={category.id}>
+                          {" "}
+                          {category.name}{" "}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription>
-                    Select category
-                  </FormDescription>
+                  <FormDescription>Select category</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -191,9 +217,7 @@ export default function CompanionForm({
           </div>
           <div className="w-full py-2">
             <div>
-              <h3 className="text-xl py-1">
-                Configuration
-              </h3>
+              <h3 className="text-xl py-1">Configuration</h3>
               <p className="text-muted-foreground">
                 Detailed instruction for your AI's behaviour
               </p>
@@ -201,51 +225,53 @@ export default function CompanionForm({
           </div>
           <Separator className="bg-primary/30 my-2" />
           <FormField
-              name="instructs"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Instructions</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      disabled={isLoading}
-                      className="bg-primary/80 h-[12rem] text-black"
-                      placeholder={PREAMBLE}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>Describe your AI's characteristics and some back story.</FormDescription>
-                  <FormMessage />
-
-                </FormItem>
-              )}
-            />
+            name="instructs"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Instructions</FormLabel>
+                <FormControl>
+                  <Textarea
+                    disabled={isLoading}
+                    className="bg-primary/80 md:h-[12rem] h-[20rem] text-black"
+                    placeholder={PREAMBLE}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Describe your AI's characteristics and some back story.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
-              name="seed"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Example Conversation</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      disabled={isLoading}
-                      className="bg-primary/80 h-[20rem] text-black"
-                      placeholder={SEED_CHAT}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>Describe your AI's characteristics and some back story.</FormDescription>
-                  <FormMessage />
-
-                </FormItem>
-              )}
-            />
-            <div className="py-3">
-              <Button size="lg" disabled={isLoading}>
-                {initialData? "Edit your companion" : "Create your companion"}
-                <Wand2 className="w-4 ml-2 h-4" />
-              </Button>
-            </div>
+            name="seed"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Example Conversation</FormLabel>
+                <FormControl>
+                  <Textarea
+                    disabled={isLoading}
+                    className="bg-primary/80 md:h-[17rem] h-[20rem] text-black"
+                    placeholder={SEED_CHAT}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Describe your AI's characteristics and some back story.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="py-3">
+            <Button size="lg" disabled={isLoading}>
+              {initialData ? "Edit your companion" : "Create your companion"}
+              <Wand2 className="w-4 ml-2 h-4" />
+            </Button>
+          </div>
         </form>
       </FormProvider>
     </div>
