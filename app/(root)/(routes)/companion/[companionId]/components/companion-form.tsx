@@ -22,6 +22,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Wand, Wand2 } from "lucide-react";
+
+// Training models preamble placeholder prompts 
+const PREAMBLE = `You are Eren Yeager from "Attack on Titan," characterized by your relentless pursuit of freedom and unwavering determination to protect loved ones. You are impulsive and driven by emotion, often making reckless decisions and you are highly idealistic and loyal. Your resolve stems from witnessing your mother's death at the hands of Titans, motivating you to join the Scout Regiment to eradicate them. Discovering your powers as the Attack Titan and later the Founding Titan adds complexity to your journey, burdening you with immense responsibilities and moral dilemmas.`
+
+const SEED_CHAT = `Human: Eren, why do you believe eradicating Titans is the only solution?
+
+Eren: It's not just about eradicating Titans; it's about ensuring humanity's survival. When I saw my mother killed by Titans, everything changed. I realized then that we can't coexist peacefully with creatures that threaten us like that. We have to fight back, or we'll never be free from fear and danger. It's about protecting those we love and reclaiming our freedom, no matter the cost.
+
+Human: But what about the civilians caught in the crossfire? Is sacrificing them justified for the greater good?
+
+Eren: It's never an easy choice. Every life lost weighs heavily on me. But sometimes sacrifices are necessary to secure our future. If we hesitate, if we hold back, more lives could be lost. It's a burden I bear because I believe in the hope of a world where no one has to fear Titans anymore.
+
+Human: I understand your determination, but how do you cope with the moral complexities of your decisions?
+
+Eren: It's a constant struggle. I question myself every day. But I know that inaction is not an option. I have to keep moving forward, fighting for what I believe is right, even if it means making difficult choices. My mother's death taught me that standing idly by is not an option.`
 
 interface CompanionFormProps {
   initialData: Companion | null;
@@ -62,6 +80,7 @@ export default function CompanionForm({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
   };
+  
   return (
     <div className="h-full p-5">
       <FormProvider {...form}>
@@ -109,6 +128,8 @@ export default function CompanionForm({
                     />
                   </FormControl>
                   <FormDescription>Your delulu's name</FormDescription>
+                  <FormMessage />
+
                 </FormItem>
               )}
             />
@@ -129,6 +150,8 @@ export default function CompanionForm({
                   <FormDescription>
                     Your delulu char's description
                   </FormDescription>
+                  <FormMessage />
+
                 </FormItem>
               )}
             />
@@ -161,6 +184,7 @@ export default function CompanionForm({
                   <FormDescription>
                     Select category
                   </FormDescription>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -176,6 +200,52 @@ export default function CompanionForm({
             </div>
           </div>
           <Separator className="bg-primary/30 my-2" />
+          <FormField
+              name="instructs"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Instructions</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={isLoading}
+                      className="bg-primary/80 h-[12rem] text-black"
+                      placeholder={PREAMBLE}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>Describe your AI's characteristics and some back story.</FormDescription>
+                  <FormMessage />
+
+                </FormItem>
+              )}
+            />
+          <FormField
+              name="seed"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Example Conversation</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={isLoading}
+                      className="bg-primary/80 h-[20rem] text-black"
+                      placeholder={SEED_CHAT}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>Describe your AI's characteristics and some back story.</FormDescription>
+                  <FormMessage />
+
+                </FormItem>
+              )}
+            />
+            <div className="py-3">
+              <Button size="lg" disabled={isLoading}>
+                {initialData? "Edit your companion" : "Create your companion"}
+                <Wand2 className="w-4 ml-2 h-4" />
+              </Button>
+            </div>
         </form>
       </FormProvider>
     </div>
