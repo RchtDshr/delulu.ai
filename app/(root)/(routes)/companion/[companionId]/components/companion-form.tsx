@@ -5,7 +5,9 @@ import { Form, FormProvider, useForm } from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as z from "zod";
 import { Separator } from "@/components/ui/separator";
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import ImageUpload from "@/components/image-upload";
+import { Input } from "@/components/ui/input";
 
 interface CompanionFormProps{
     initialData: Companion | null;
@@ -55,16 +57,49 @@ export default function CompanionForm({initialData, categories}:CompanionFormPro
           <Separator className="bg-primary/30 my-2" />
           </div>
 
+          <div className="p-3">
           <FormField
           name="src"
           render = {({field}) => (
             <FormItem className="flex items-center">
               <FormControl>
-                Image Upload Component
+
+                <ImageUpload disabled={isLoading} onChange={field.onChange} value={field.value} >
+
+                </ImageUpload>
               </FormControl>
               <FormMessage />
             </FormItem>
           )} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+            name = "name" 
+            control={form.control}
+            render={({field}) =>(
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input disabled={isLoading} className="bg-primary/80 text-black" placeholder="Eren Jeager" {...field} />
+                </FormControl>
+                <FormDescription>Your delulu's name</FormDescription>
+              </FormItem>
+            )}
+            />
+            <FormField
+            name = "desc" 
+            control={form.control}
+            render={({field}) =>(
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input disabled={isLoading} className="bg-primary/80 text-black" placeholder="Best Anime Character" {...field} />
+                </FormControl>
+                <FormDescription>Your delulu char's description</FormDescription>
+              </FormItem>
+            )}
+            />
+          </div>
         </form>
       </FormProvider>
     </div>
