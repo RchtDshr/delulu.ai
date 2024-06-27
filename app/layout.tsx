@@ -5,10 +5,10 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 
-
-// poppins font 
-import { Poppins } from 'next/font/google';
+// poppins font
+import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 
 const font = Poppins({
   weight: ["500"],
@@ -28,9 +28,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className= {cn("bg-secondary",font.className )}>
+        <body className={cn("bg-secondary", font.className)}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

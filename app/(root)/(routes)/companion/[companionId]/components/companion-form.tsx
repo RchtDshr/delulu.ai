@@ -94,10 +94,12 @@ export default function CompanionForm({
       }
       
       toast({
-        title: "Companion created successfully"
+        title: "Success"
       })
+      // refrest all the server components from the db ensuring the its redirected to patch request to edit
       router.refresh()
       router.push('/')
+
     } catch (err) {
       toast({
         variant: "destructive",
@@ -116,7 +118,7 @@ export default function CompanionForm({
             <div>
               <h3 className="text-3xl">General Information</h3>
               <p className="text-muted-foreground text-md">
-                Add general information about the companion.
+                Add general information about the delulu's character.
               </p>
             </div>
             <Separator className="bg-primary/30 my-2" />
@@ -268,7 +270,7 @@ export default function CompanionForm({
           />
           <div className="py-3">
             <Button size="lg" disabled={isLoading}>
-              {initialData ? "Edit your companion" : "Create your companion"}
+              {initialData ? "Edit your delulu" : "Create your delulu"}
               <Wand2 className="w-4 ml-2 h-4" />
             </Button>
           </div>

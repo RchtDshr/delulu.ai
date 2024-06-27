@@ -2,6 +2,17 @@ this is a ai companion type project which is like character ai (c.ai)
 
 step-by-step procedure:
 
+    using clerk made a signin and signup page which made authentication easily
+    defined a  schema in prisma for category
+    made homepage which had all the categories in which char's can  be listed
+    .
+    .
+    made a create new ai page
+    api redirect there
+    used cloudinary for image upload
+    and made a form using react form hook which is very complex - try to study it again
+    when submit button is clicked, the data is feeded into db and then the page is refreshed to home page
+
 technologies used:
 1. nextjs
     routing in nextjs is done using folder structure
@@ -25,10 +36,12 @@ technologies used:
 
 4. prisma
     in here db schemas are made and generated which are then fed into the db
-    it is a orm model which allows you to define your database schema in a TypeScript-friendly
+    it is a orm model which allows you to define your database schema in a TypeScript-friendly way
     two steps to follow whenever schema is changed:
         npx prisma generate
         npx prisma db push
+    to view your db in browser 
+        npx prisma studio
 
 5. neon tech 
     db provider
