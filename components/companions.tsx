@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { MessagesSquare } from "lucide-react";
 
 interface CompanionsProps {
   // passing a list of data which conatins companion and their count
@@ -37,7 +37,7 @@ export default function Companions({ data }: CompanionsProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grip-cols-5 lg:grid-cols-6 gap-2 ">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grip-cols-5 lg:grid-cols-6 gap-2 ">
       {data.map((item) => (
         <Card
           key={item.id}
@@ -58,7 +58,7 @@ export default function Companions({ data }: CompanionsProps) {
                 </div>
                 <div className="flex items-center gap-1 ">
                   
-                        <MessageCircle className="w-4" />
+                        <MessagesSquare className="w-4" />
                   
                   
                         {item._count.msgs}
