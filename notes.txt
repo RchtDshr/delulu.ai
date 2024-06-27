@@ -5,6 +5,7 @@ step-by-step procedure:
     using clerk made a signin and signup page which made authentication easily
     defined a  schema in prisma for category
     made homepage which had all the categories in which char's can  be listed
+    made an input search using useDebounce which runs after user stops typing implying user has completed the typing. after settimeout of 500ms = 0.5s user stops typing.. what the user typed is appended into the url to make search easy
     .
     .
     made a create new ai page
