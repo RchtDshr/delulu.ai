@@ -12,7 +12,7 @@ export default function RootLayout({
         <div className="hidden md:flex flex-col fixed mt-[4.5rem] bg-secondary shadow-md rounded-t-none inset-y-0">
           <Sidebar />
         </div>
-        <main className="md:pl-[7rem] pt-20 h-[100vh]">
+        <main className="md:pl-[6.5rem] pt-16 h-[100vh]">
          {children}
         </main>
      </div>

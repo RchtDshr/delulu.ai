@@ -33,19 +33,19 @@ export default function Sidebar() {
 
   return (
     <div className="space-y-4 flex flex-col h-[100vh] text-primary bg-secondary">
-      <div className="p-3 flex flex-1 justify-center">
+      <div className="p-2 pt-0 flex flex-1 justify-center">
         <div className="space-y-3">
           {routes.map((route) => (
             <div
               key={route.href}
               onClick={() => onNavigate(route.href)}
               className={cn(
-                "text-muted-foreground text-sm group flex p-3 justify-start font-medium cursor-pointer hover:text-primary hover:bg-primary/10 w-full transition rounded-md",
+                "text-muted-foreground text-sm group flex p-3 py-4 justify-start font-medium cursor-pointer hover:text-primary hover:bg-primary/10 w-full transition rounded-md",
                 pathname === route.href && "bg-primary/10 text-primary"
               )}
             >
             <div className="flex flex-col gap-y-2 items-center flex-1">
-                <route.icon className="h-10 w-8"/>
+                <route.icon className="h-7 w-7"/>
                 {route.label}
             </div>
             </div>

@@ -38,11 +38,11 @@ export default function SearchInput() {
 
   return (
     <div className="relative">
-        <Search className="absolute top-2 left-4 text-muted-foreground "/>
+        <Search className="absolute top-1.5 left-4 text-muted-foreground "/>
         <Input value={value} 
         // onChange={onChange} 
         onChange={(e) => setValue(e.target.value)}
-        className="h-10 bg-primary/20 pl-16" placeholder="Search..."/>
+        className="h-9 bg-primary/20 pl-16" placeholder="Search..."/>
     </div>
   )
 }

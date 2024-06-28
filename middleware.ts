@@ -10,6 +10,13 @@ export default clerkMiddleware((auth, req) => {
 });
 
 export const config = {
-  matcher: ["/((?!.+.[w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [
+    // Match all routes except static files and _next
+    '/((?!.*\\..*|_next).*)', 
+    // Specifically match the root route
+    '/',
+    // Match API routes
+    '/api/(.*)',
+  ],
 };
 //latest clerk doesnt automatically make routes in accessible

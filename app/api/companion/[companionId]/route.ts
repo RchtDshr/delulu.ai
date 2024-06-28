@@ -1,5 +1,5 @@
 import prismadb from "@/lib/prismadb";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server"
 
 export async function PATCH(req: Request, {params} : {params: {companionId: string}}) {
@@ -21,7 +21,7 @@ export async function PATCH(req: Request, {params} : {params: {companionId: stri
     }
 
     const companion = await prismadb.companion.update({
-        where: { id: params.companionId },
+        where: { userId: user.id, id: params.companionId },
         data: {
             categoryId,
             userId: user.id,
@@ -38,5 +38,29 @@ export async function PATCH(req: Request, {params} : {params: {companionId: stri
   } catch (err){
     console.log("[Companion_patch error]", err)
     return new NextResponse('Internal error', {status: 500})
+  }
+}
+
+export async function DELETE(req: Request, {params} : {params: {companionId: string}}) {
+  try {
+    const {userId} = auth();
+
+    // if user is not logged in 
+    if (!userId) {
+      return new NextResponse("Unauthorized", {status: 401}) 
+    }
+    
+    const companion = await prismadb.companion.delete({
+      where: {
+        userId: userId, //only user thaat has made that companion can delete it
+        id: params.companionId
+      }
+    })
+
+    return NextResponse.json(companion);
+
+  } catch (error) {
+    console.log("Companion_delete error ", error);
+    return new NextResponse("Internal error", {status: 500})
   }
 }

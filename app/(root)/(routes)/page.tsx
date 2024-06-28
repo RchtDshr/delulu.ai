@@ -38,7 +38,7 @@ export default async function RootPage({searchParams} : RootPageParams) {
   // find all categories from the categories table
   const categories = await prismadb.category.findMany();
   return (
-    <div className='h-full space-y-2 p-4'>
+    <div className='h-full space-y-2 p-1 pr-2'>
        <SearchInput />
        <Categories data={categories} />
        <Companions data={data} />

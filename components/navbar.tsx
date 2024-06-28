@@ -16,14 +16,14 @@ const font = Poppins({
 
 export default function Navbar() {
   return (
-    <div className="bg-secondary/90 h-[4.5rem] shadow-md border-primary fixed w-full flex justify-between items-center px-6 py-4 z-50">
+    <div className="bg-secondary/90 h-[3.5rem] shadow-md border-primary fixed w-full flex justify-between items-center px-6 py-3 z-50">
       <div className="flex items-center">
         {/* <Menu className="block md:hidden" /> */}
         <MobileSidebar />
         <Link href="/">
           <h1
             className={cn(
-              "font-bold hidden md:block text-3xl",
+              "font-bold hidden md:block text-2xl",
               font.className
             )}
           >
@@ -31,8 +31,8 @@ export default function Navbar() {
           </h1>
         </Link>
       </div>
-        <div className="flex items-center gap-3 border-secondary h-9">
-        <Button variant="default"> Upgrade </Button>
+        <div className="flex items-center gap-3 border-secondary">
+        {/* <Button size="md" variant="default"> Upgrade </Button> */}
         <ModeToggle />
         <UserButton/>
         </div>

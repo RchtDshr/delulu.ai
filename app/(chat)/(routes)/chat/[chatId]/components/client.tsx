@@ -15,7 +15,7 @@ interface ChatClientProps{
 export default function ChatClient({companion}:ChatClientProps) {
 
   return (
-    <div className="p-3 flex flex-col h-full space-y-2">
+    <div className="p-1 flex flex-col space-y-2">
         <ChatHeader companion={companion} />
     </div>
   )

@@ -25,10 +25,10 @@ export default function Categories({data}: CategoriesProps) {
     }
 
   return (
-    <div className="w-full overflow-x-auto py-3 p-1 pt-2 flex items-center gap-2 scrollbar-hide">
+    <div className="w-full overflow-x-auto py-2 p-1 pt-1 flex items-center gap-2 scrollbar-hide">
         <Button
         onClick={() => onClick(undefined)}
-        className={cn("text-[1rem] h-12 px-5 bg-primary/90 flex items-center", 
+        className={cn("text-sm h-10 px-5 bg-primary/90 flex items-center", 
         !categoryId ? 'bg-primary' : 'bg-primary/70' )} >
             Newest
         </Button>
@@ -37,7 +37,7 @@ export default function Categories({data}: CategoriesProps) {
             <Button
             onClick={() => onClick(item.id)}
             key={item.id}
-            className={cn("text-[1rem] h-12 px-5 bg-primary/90 flex items-center", item.id===categoryId ? 'bg-primary' : 'bg-primary/70' )} >
+            className={cn("text-sm h-10 px-5 bg-primary/90 flex items-center", item.id===categoryId ? 'bg-primary' : 'bg-primary/70' )} >
             {item.name}
         </Button>
         ))}

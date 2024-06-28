@@ -37,11 +37,11 @@ export default function Companions({ data }: CompanionsProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grip-cols-5 lg:grid-cols-6 gap-2 ">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grip-cols-5 lg:grid-cols-5 gap-2 ">
       {data.map((item) => (
         <Card
           key={item.id}
-          className="bg-primary/10 py-5 cursor-pointer hover:opacity-75 transition border-3 pb-0"
+          className="bg-primary/10 py-3 cursor-pointer hover:opacity-75 transition border-3 pt-0 pb-0"
         >
           <Link href={`/chat/${item.id}`}>
             <CardHeader className="flex flex-col justify-center items-center text-left gap-3 pb-2">
@@ -49,7 +49,7 @@ export default function Companions({ data }: CompanionsProps) {
                 <Image fill className="rounded-md object-cover" src={item.src} alt={`${item.name}`} />
               </div>
               {/* <CardTitle> */}
-                <p className="text-left text-lg w-full font-bold"> {item.name}</p>
+                <p className="text-left text-md w-full font-bold"> {item.name}</p>
               {/* </CardTitle> */}
             </CardHeader>
             <CardFooter className="flex justify-between items-center text-xs text-muted-foreground">

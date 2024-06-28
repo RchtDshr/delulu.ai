@@ -6,7 +6,7 @@ import { ChevronLeft, MessagesSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import BotAvatar from "./bot-avatar";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { useToast } from "./ui/use-toast";
 import axios from "axios";
 
@@ -27,14 +27,18 @@ export default function ChatHeader({ companion }: ChatHeaderProps) {
   async function onDelete() {
     try {
         // if user wants to delete, use companion id to delete and call a delete call for api
-        await axios.delete(`/companion/${companion.id}`);
+        await axios.delete(`/api/companion/${companion.id}`);
         toast({
             description:"Companion deleted",
-            variant: "destructive"
+            variant: "default"
         })
+
+        // after deleted redirect to here 
+        router.refresh();
+        router.push('/')
     } catch (error) {
         toast({
-            description:"Some went wrong",
+            description:"Something went wrong",
             variant: "destructive"
         })
     }
@@ -43,10 +47,10 @@ export default function ChatHeader({ companion }: ChatHeaderProps) {
 //   const {userId} = useAuth();
 
   return (
-    <div className="chat-header h-full w-full flex justify-between items-center border-b border-primary/10 p py-4">
+    <div className="chat-header w-full flex justify-between items-center border-b border-primary/10 p py-2">
       <div className="back-button flex justify-start items-center gap-3">
         <Button size="icon" variant="ghost" onClick={() => router.back()}>
-          <ChevronLeft className="h-8 w-8" />
+          <ChevronLeft className="h-6 w-6" />
         </Button>
         <BotAvatar src={companion.src} />
         <div className="flex flex-col items-start gap-1">
@@ -56,15 +60,15 @@ export default function ChatHeader({ companion }: ChatHeaderProps) {
               <MessagesSquare className="h-4 " /> {companion._count.msgs}
             </div>
           </div>
-          <div className="text-muted-foreground text-md"> Created by {companion.userName}</div>
+          <div className="text-muted-foreground text-sm"> Created by {companion.userName}</div>
         </div>
       </div>
 
 {/* if the companion is made by that user  */}
     {user?.id === companion.userId && (
         <div className="flex gap-2">
-            <Button size="sm" variant="ghost" onClick={() => router.push(`/companion/${companion.id}`) } >Edit</Button>
-            <Button size="sm" variant="ghost" onClick={onDelete}>Delete</Button>
+            <Button size="sm" variant="link" onClick={() => router.push(`/companion/${companion.id}`) } >Edit</Button>
+            <Button size="sm" variant="link" onClick={onDelete}>Delete</Button>
         </div>
     )}
 
