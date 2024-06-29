@@ -29,9 +29,13 @@ export default function ChatMessage({
     >
       {role !== "user" && src && <BotAvatar src={src} />}
       <div className="text-sm max-w-sm bg-primary/10 rounded-lg px-3 py-2">
-        {isLoading ? "Loading..." : content}
+        {isLoading ? (
+          <p className="text-muted-foreground">Loading...</p>
+        ) : (
+          content
+        )}
       </div>
-      {role === "user" && <UserAvatar/>}
+      {role === "user" && <UserAvatar />}
     </div>
   );
 }
