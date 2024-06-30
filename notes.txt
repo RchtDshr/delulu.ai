@@ -53,3 +53,19 @@ technologies used:
 
 6. cloudinary
     cloud-based image and video processing platform that enables developers to easily upload, store, manipulate, and deliver images and videos in their web and mobile applications.
+
+7. pinecone
+    to create advanced embedding in a vector db
+    1536 vector embedding bcoz chatgpt uses the same number of vector embedding
+
+8. redis
+    to store data in memory... it is like a db to store messages
+
+9. upstash
+    manage db in cloud
+
+10. openai
+    api used to use vector embedding by openai
+
+11. replicate ai llama
+    ai model used for generating msg
