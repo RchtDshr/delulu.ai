@@ -46,6 +46,8 @@ technologies used:
     to view your db in browser 
         npx prisma studio
 
+    this db in this project is just used to store the history of chats and its count.. the chats are not stored in memory for ai
+
 5. neon tech 
     db provider
     out tables and data is stored in here
