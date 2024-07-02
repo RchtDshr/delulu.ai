@@ -43,7 +43,7 @@ export default function ChatMessages({
         <ChatMessage
           key={msg.content}
           role={msg.role}
-          src={msg.src}
+          src={companion.src}
           content={msg.content}
         />
       ))}

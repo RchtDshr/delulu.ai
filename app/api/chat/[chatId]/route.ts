@@ -1,4 +1,4 @@
-import { LangChainAdapter, StreamingTextResponse } from 'ai';
+import { LangChainStream, StreamingTextResponse } from 'ai';
 
 import { CallbackManager } from "@langchain/core/callbacks/manager";
 import { Replicate } from "@langchain/community/llms/replicate";
@@ -84,7 +84,7 @@ export async function POST(req: Request, {params}: {params: {chatId: string}}){
             relevantHistory = similarDocs.map(doc => doc.pageContent).join("\n");
         }
 
-        const { handlers } = LangChainAdapter;
+        const { handlers } = LangChainStream();
 
         // create model
         const model = new Replicate({
@@ -141,8 +141,9 @@ export async function POST(req: Request, {params}: {params: {chatId: string}}){
                         }
                     }
                 }
-            })
+            });
         }
+
         return new StreamingTextResponse(s);
     } catch (err) {
         console.log("CHATPOST_ERROR", err)

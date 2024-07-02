@@ -28,9 +28,9 @@ export default function ChatClient({ companion }: ChatClientProps) {
     useCompletion({
       ///usecompletion is somethinf like useform hook but which provides versatile functionality made for ai tool
       api: `/api/chat/${companion.id}`, // api call which will generate ai msgs
-      onFinish(prompt, completion) {
+      onFinish(_prompt, completion) {
         // for ai msg
-        const systemMessage : ChatMessageProps = {
+        const systemMessage: ChatMessageProps = {
           role: "system", //all the system will be stored. ai will take time to generate msg so we have isFinished and content completion type of remarks to help us understand when the ai has completed generating msg
           content: completion,
         };
@@ -59,9 +59,9 @@ export default function ChatClient({ companion }: ChatClientProps) {
       <ChatHeader companion={companion} />
 
       <ChatMessages
-      companion={companion}
-      isLoading={isLoading}
-      messages={messages}
+        companion={companion}
+        isLoading={isLoading}
+        messages={messages}
       />
 
       <ChatForm
